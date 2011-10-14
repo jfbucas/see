@@ -1,0 +1,123 @@
+
+ - Ceci est l'HowTo du logiciel See -
+
+
+1. Présentation
+===============
+
+Les objectifs et fonctionnalités de ce logiciel sont :
+
+ - offrir un moyen simple de visionner différents formats d'images
+ - parcourir le contenu d'un répertoire d'images
+ - permettre les commentaires incrustés
+ - permettre la rotation des images
+ - donner un rendu visuel épuré ( no décorations et joli zoom )
+ - mode plein écran
+ - apprendre à manipuler SDL et OpenGL
+
+
+
+2. Compilation/Installation
+===========================
+
+Dépendances & bibliothèques :
+
+ - STL		Standard Template Libraries
+ - boost	www.boost.org  (seule la partie filesystem sert)
+ - libsdl	www.libsdl.org
+ - SDL_Image	www.libsdl.org/projects/SDL_image
+ - SDL_ttf	www.libsdl.org/projects/SDL_ttf
+ - OpenGL	(installé avec le driver 3D)
+ - X11		(installé avec X.org ou X11)
+ 
+
+Compilation :
+
+	edo@paganini see $ make
+	g++ -Wall -c `sdl-config --cflags` -g -Wno-deprecated -O3 -I. -c descript.cpp -o descript.o
+	g++ -Wall -c `sdl-config --cflags` -g -Wno-deprecated -O3 -I. -c fichier.cpp -o fichier.o
+	g++ -Wall -c `sdl-config --cflags` -g -Wno-deprecated -O3 -I. -c dir.cpp -o dir.o
+	g++ -Wall -c `sdl-config --cflags` -g -Wno-deprecated -O3 -I. -c video.cpp -o video.o
+	g++ -Wall -c `sdl-config --cflags` -g -Wno-deprecated -O3 -I. -c core.cpp -o core.o
+	g++ -Wall -c `sdl-config --cflags` -g -Wno-deprecated -O3 -I. -c main.cpp -o main.o
+	g++ `sdl-config --libs` -lSDL_image -lSDL_ttf -lX11 -lGL -lGLU descript.o fichier.o dir.o video.o core.o main.o -lboost_filesystem-gcc-d-1_31  -o see
+
+
+Installation :
+
+	edo@paganini see $ make install
+	cp ./see /usr/local/bin/see
+
+	note : le logiciel se sert par défaut de la police /usr/share/fonts/corefonts/arialbd.ttf
+
+Nettoyation :
+
+	edo@paganini see $ make clean
+	rm -f descript.o fichier.o dir.o video.o core.o main.o see
+
+
+Systèmes testés :
+
+	Athlon 32bits & CG NVidia
+	Athlon 64bits & CG ATI Express 200M
+
+
+
+3. Paramètres
+=============
+
+
+Usage : 
+
+	see [directory|picture_name]
+
+	- si on spécifie un répertoire, le logiciel commence par la première image trouvée
+	on peut alors continuer sur les images suivantes
+
+	- si on spécifie un nom de fichier, le logiciel va essayer de commencer par montrer
+	cette image
+
+
+Help :
+	edo@paganini see $ see -h    
+	Usage : see [directory|picture_name] 
+		-k      Show available Keys
+		-f      Start fullscreen(TODO)
+		-c      Disable comment(TODO)
+		-v      verbosity(TODO)
+
+
+Touches :
+
+	edo@paganini see $ see -k
+	Usage : see [directory|picture_name] 
+	Normal mode : 
+		Space,Wheel Down        Next
+		Shift-Space,Wheel Up    Previous
+		Home                    First
+		End                     Last
+		F1,f                    Toggle Fullscreen
+		c                       Toggle Comments
+		e,i                     Enter comment edit mode
+		z,+/Z,-                 zoom/unZoom
+		Arrows                  Move
+		*                       Reinit(position,zoom)
+		Esc,q                   Quit
+
+	Comment Edit mode : 
+		Enter                   Save comment
+		Esc                     Leave edit mode without saving
+													
+
+4. Problèmes
+============
+
+ - la bibliothèque boost n'est pas trouvée pendant la compilation :
+ suivants les systèmes, la bibliothèque n'est pas configurée de la même manière.
+ il faut alors voir le fichier "ll /usr/lib/libboost_filesystem*"
+ et adapter le fichier Makefile en conséquence
+
+ - les grandes images ne sont pas visualisables :
+ OpenGL ne permet pas de créé de trop grandes textures (TODO déterminer la taille maximale 2^x)
+
+ 

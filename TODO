@@ -1,0 +1,40 @@
+----------------
+TODO
+
+- descript.ion
+	- les commentaires multilignes
+	- les accents circoncornflêxes et trëma
+	- permettre de mettre un commentaire sur le répertoire père
+	  
+- timer
+	- update directory infos every secondes
+	- show picture name for a seconde
+	- show picture description for a seconde
+	
+- rotation de l'image 
+	- vérifier que l'on est bien sur un fichier JPG pour jpegtran
+	- sinon appeller l'outil 
+	
+- options
+	- afficher ou pas les commentaires
+	- afficher ou pas le nom de l'image
+	- limiter la taille de la fenetre
+	- forcer le chargement d'un fichier sous forme RGB ou 8bits ou grayscal
+	- niveaux de verbosité
+
+
+
+----------------
+BUGS
+
+* circulation dans la liste
+current = dirList->getPrec(current);
+avec Current = dirList->getFirst()
+reviens à la fin de la liste
+
+* maintient de la touche Shift/Ctrl lors
+de combinaisons impliquant un
+changement d'image
+
+* le curseur de la souris se réaffiche
+même lorsqu'il a été désactivé
